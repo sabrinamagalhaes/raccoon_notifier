@@ -35,11 +35,11 @@ dependency_links=['https://github.com/devraccoon/raccoon_notifier/tarball/master
 
 ### Send email
 ```python
-from raccoon_email.email_sender import EmailSender
+from raccoon_notifier.email_sender import EmailSender
 
 sender = EmailSender('Software Name', 'example@gmail.com', 'password')
 sender.add_attachment(file_name) # Optional
-sender.send('to@gmail.com', 'Example', 'Body')
+sender.send(['to@gmail.com'], 'Example', 'Body')
 ```
 
 #### Arguments
@@ -61,15 +61,27 @@ sender.send('to@gmail.com', 'Example', 'Body')
 
 ## SMS Sender
 
-  * Module to easily send SMS using **Plivo**
+  * Module to easily send SMS using **[Plivo API](https://www.plivo.com/)**
   * Unify SMS model
 
 ### Send SMS
 
 ```python
-from raccoon_email.sms_sender import SMSSender
+from raccoon_notifier.sms_sender import SMSSender
 
-sender = EmailSender('Software Name', 'example@gmail.com', 'password')
-sender.add_attachment(file_name) # Optional
-sender.send('to@gmail.com', 'Example', 'Body')
+sender = SMSSender('Software Name', 'AuthID', 'AuthToken')
+sender.send(['5516111111111'], "Hello, it's me")
 ```
+
+### Arguments
+
+> SMSSender(name, auth_id, auth_token)
+
+* **name**: Software name (appear before message)
+* **auth_id**: Plivo AuthID
+* **auth_token**: Plivo Auth Token
+
+> SMSSender.send(phones, message)
+
+* **phones**: _list_ of recipients phones
+* **message**: message to be sent
