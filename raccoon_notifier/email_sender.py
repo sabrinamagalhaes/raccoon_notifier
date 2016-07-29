@@ -53,7 +53,7 @@ class EmailSender(object):
         else:
             try:
                 response = self.server.sendmail(msg['From'], toaddrs, msg.as_string())
-                logging.important('Sent email to: {0}. Response: {1}.'.format(toaddrs, str(response)))
+                logging.important('Sent email to: {0}.'.format(toaddrs))
             except smtplib.SMTPException:
                 logging.error('Unable to send email to %s' % toaddrs)
 
