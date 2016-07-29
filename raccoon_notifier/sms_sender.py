@@ -47,4 +47,5 @@ class SMSSender(object):
             result = self.sender.send_message(params)
             if result[0] == 400:
                 logging.error(result[1]['error'])
+                return
             logging.important('Sent SMS to: {0}. Response: {1}.'.format(phones, str(result)))
