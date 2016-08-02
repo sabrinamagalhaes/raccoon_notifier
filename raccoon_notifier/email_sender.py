@@ -2,6 +2,7 @@
 
 import logging
 import smtplib
+import socket
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -20,8 +21,11 @@ class EmailSender(object):
     def add_attachment(self, attach):
         self.attachment.append(attach)
 
-    def send(self, toaddrs, subject, body):
-        self.server = smtplib.SMTP('smtp.gmail.com', 587)
+    def send(self, toaddrs, subject, body, footer=True):
+        try:
+            self.server = smtplib.SMTP('smtp.gmail.com', 587)
+        except socket.gaierror, e:
+            logging.error(e)
         self.server.ehlo()
         self.server.starttls()
         try:
@@ -33,11 +37,15 @@ class EmailSender(object):
         msg['Subject'] = subject
         msg['From'] = self.from_addr
 
-        body += self.footer
+        try:
+            msg1 = MIMEText(body, 'plain', 'utf-8')
+            msg.attach(msg1)
+        except UnicodeEncodeError:
+            logging.error('Unicode error sending email')
 
-        html_msg = MIMEText(body, 'html')
-
-        msg.attach(html_msg)
+        if footer:
+            html_msg = MIMEText(self.footer, 'html')
+            msg.attach(html_msg)
 
         for attachment_file in self.attachment:
             try:
