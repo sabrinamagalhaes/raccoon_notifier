@@ -50,7 +50,6 @@ sender.send(['to@gmail.com'], 'Example', 'Body')
 * **password**: Sender's password
 
 > EmailSender.add_attachment(attach)
-
 * **attach**: File name and path
 
 > EmailSender.send(toaddrs, subject, body)
@@ -73,15 +72,13 @@ sender = SMSSender('Software Name', 'AuthID', 'AuthToken')
 sender.send(['5516111111111'], "Hello, it's me")
 ```
 
-### Arguments
+#### Arguments
 
 > SMSSender(name, auth_id, auth_token)
-
 * **name**: Software name (appear before message)
 * **auth_id**: Plivo AuthID
 * **auth_token**: Plivo Auth Token
 
 > SMSSender.send(phones, message)
-
 * **phones**: _list_ of recipients phones
 * **message**: message to be sent
