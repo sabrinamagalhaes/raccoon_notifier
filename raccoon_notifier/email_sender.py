@@ -55,6 +55,7 @@ class EmailSender(object):
                 msg.attach(attachment)
             except IOError, e:
                 logging.error("Couldn't send file. " + str(e))
+        self.attachment = []
 
         if self.debug:
             logging.debug('DEBUG MODE: Email: {0}'.format(msg))
