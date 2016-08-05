@@ -14,7 +14,8 @@ class EmailSender(object):
         self.gmail_pwd = pwd
         self.gmail_user = user
         self.from_addr = name
-        self.footer = '</ul><hr><font size="2" color="gray">Essa é uma mensagem automática de <a href="http://raccoon.ag">Raccoon Marketing Digital</a>.<br>Por favor, não responda este e-mail.</font></body></html>'
+        self.header = '<html><body>'
+        self.footer = '<hr><font size="2" color="gray">Essa é uma mensagem automática de <a href="http://raccoon.ag">Raccoon Marketing Digital</a>.<br>Por favor, não responda este e-mail.</font></body></html>'
         self.attachment = []
         self.server = None
 
@@ -36,6 +37,10 @@ class EmailSender(object):
         msg = MIMEMultipart()
         msg['Subject'] = subject
         msg['From'] = self.from_addr
+
+        if footer:
+            header = MIMEText(self.header, 'html')
+            msg.attach(header)
 
         try:
             msg1 = MIMEText(body, 'plain', 'utf-8')
